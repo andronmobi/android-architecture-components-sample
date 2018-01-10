@@ -1,27 +1,21 @@
 package com.andronmobi.bookstore.repository;
 
-import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.andronmobi.bookstore.AppExecutors;
 import com.andronmobi.bookstore.api.ApiResponse;
 import com.andronmobi.bookstore.api.XebiaWebservice;
 import com.andronmobi.bookstore.common.Resource;
-import com.andronmobi.bookstore.db.dao.BookDao;
 import com.andronmobi.bookstore.db.entity.BookEntity;
+import com.andronmobi.bookstore.model.Book;
 import com.andronmobi.bookstore.util.LiveDataCallAdapterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,7 +29,7 @@ public class BookRepository {
 
     // TODO delete them (workaround since there is no DB support yet)
     private List<BookEntity> bookList = new ArrayList<>(0);
-    private MutableLiveData<List<BookEntity>> booksFromDb = new MutableLiveData<>();
+    private MutableLiveData<List<? extends Book>> booksFromDb = new MutableLiveData<>();
 
     public BookRepository(AppExecutors appExecutors/*, BookDao bookDao, XebiaWebservice xebiaWebservice*/) {
         this.appExecutors = appExecutors;
@@ -51,9 +45,9 @@ public class BookRepository {
                 .create(XebiaWebservice.class);
     }
 
-    public LiveData<Resource<List<BookEntity>>> loadBook() {
+    public LiveData<Resource<List<? extends Book>>> loadBook() {
 
-        return new NetworkBoundResource<List<BookEntity>, List<BookEntity>>(appExecutors) {
+        return new NetworkBoundResource<List<? extends Book>, List<BookEntity>>(appExecutors) {
 
             @Override
             protected void saveCallResult(@NonNull List<BookEntity> books) {
@@ -62,13 +56,13 @@ public class BookRepository {
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable List<BookEntity> data) {
+            protected boolean shouldFetch(@Nullable List<? extends Book> data) {
                 return true; // TODO if we don't have data
             }
 
             @NonNull
             @Override
-            protected LiveData<List<BookEntity>> loadFromDb() {
+            protected LiveData<List<? extends Book>> loadFromDb() {
                 booksFromDb.setValue(bookList);
                 return booksFromDb;
             }

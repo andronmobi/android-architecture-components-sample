@@ -1,11 +1,8 @@
 package com.andronmobi.bookstore.ui.fragment;
 
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +10,9 @@ import android.view.ViewGroup;
 
 import com.andronmobi.bookstore.AppExecutors;
 import com.andronmobi.bookstore.R;
-import com.andronmobi.bookstore.api.ApiResponse;
-import com.andronmobi.bookstore.common.Resource;
 import com.andronmobi.bookstore.common.Status;
-import com.andronmobi.bookstore.db.entity.BookEntity;
+import com.andronmobi.bookstore.model.Book;
 import com.andronmobi.bookstore.repository.BookRepository;
-import com.andronmobi.bookstore.ui.MainActivity;
-
-import java.util.List;
 
 public class FragmentBookList extends NavFragment {
 
@@ -47,7 +39,7 @@ public class FragmentBookList extends NavFragment {
                 bookRepository.loadBook().observeForever(resource -> {
                     Log.d(TAG, "live data onChanged status " + resource.status);
                     if (resource.status == Status.SUCCESS) {
-                        for (BookEntity book : resource.data) {
+                        for (Book book : resource.data) {
                             Log.d(TAG, "book ISBN: " + book.getIsbn() + ", title: " + book.getTitle());
                         }
                     }
