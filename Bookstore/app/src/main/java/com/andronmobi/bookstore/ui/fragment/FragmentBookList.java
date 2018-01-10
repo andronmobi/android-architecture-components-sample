@@ -41,6 +41,10 @@ public class FragmentBookList extends NavFragment {
                     if (resource.status == Status.SUCCESS) {
                         for (Book book : resource.data) {
                             Log.d(TAG, "book ISBN: " + book.getIsbn() + ", title: " + book.getTitle());
+                            for (String syn : book.getSynopsis()) {
+                                Log.d(TAG, "synopsis: " + syn);
+                            }
+                            Log.d(TAG, "--------------------");
                         }
                     }
                 });
