@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.andronmobi.bookstore.AppExecutors;
 import com.andronmobi.bookstore.R;
 import com.andronmobi.bookstore.common.Status;
+import com.andronmobi.bookstore.db.BookDb;
 import com.andronmobi.bookstore.model.Book;
 import com.andronmobi.bookstore.repository.BookRepository;
 
@@ -28,6 +29,9 @@ public class FragmentBookList extends NavFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        final BookDb db = BookDb.getInstance(getContext());
+
         view.findViewById(R.id.btn_fragment_one).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,14 +39,20 @@ public class FragmentBookList extends NavFragment {
 //                    FragmentControl fragmentControl = (FragmentControl) getActivity();
 //                    fragmentControl.displayFragment(FragmentBookInfo.class);
 //                }
-                BookRepository bookRepository = new BookRepository(new AppExecutors());
+                BookRepository bookRepository = new BookRepository(new AppExecutors(), db);
                 bookRepository.loadBook().observeForever(resource -> {
                     Log.d(TAG, "live data onChanged status " + resource.status);
                     if (resource.status == Status.SUCCESS) {
                         for (Book book : resource.data) {
-                            Log.d(TAG, "book ISBN: " + book.getIsbn() + ", title: " + book.getTitle());
-                            for (String syn : book.getSynopsis()) {
-                                Log.d(TAG, "synopsis: " + syn);
+                            Log.d(TAG, "id: " + book.getId());
+                            Log.d(TAG, "title: " + book.getTitle());
+                            Log.d(TAG, "book ISBN: " + book.getIsbn());
+                            Log.d(TAG, "title: " + book.getCover());
+                            Log.d(TAG, "price: " + book.getPrice());
+                            if (book.getSynopsis() != null) {
+                                for (String syn : book.getSynopsis()) {
+                                    Log.d(TAG, "synopsis: " + syn);
+                                }
                             }
                             Log.d(TAG, "--------------------");
                         }

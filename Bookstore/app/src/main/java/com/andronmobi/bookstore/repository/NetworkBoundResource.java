@@ -1,21 +1,16 @@
 package com.andronmobi.bookstore.repository;
 
-import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.andronmobi.bookstore.AppExecutors;
 import com.andronmobi.bookstore.api.ApiResponse;
 import com.andronmobi.bookstore.common.Objects;
 import com.andronmobi.bookstore.common.Resource;
-import com.andronmobi.bookstore.db.entity.BookEntity;
 
 public abstract class NetworkBoundResource<ResultType, RequestType> {
 

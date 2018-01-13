@@ -11,17 +11,17 @@ import com.andronmobi.bookstore.db.entity.BookEntity;
 import java.util.List;
 
 @Dao
-public interface BookDao {
+public abstract class BookDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(BookEntity book);
+    public abstract void insert(BookEntity book);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<BookEntity> books);
+    public abstract void insertAll(List<BookEntity> books);
 
     @Query("SELECT * FROM books WHERE id = :bookId")
-    LiveData<BookEntity> loadBook(int bookId);
+    public abstract LiveData<BookEntity> loadBook(int bookId);
 
     @Query("SELECT * FROM books")
-    LiveData<List<BookEntity>> loadAllBooks();
+    public abstract LiveData<List<BookEntity>> loadAllBooks();
 }
