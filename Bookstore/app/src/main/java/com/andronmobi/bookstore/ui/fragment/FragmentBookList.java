@@ -1,6 +1,7 @@
 package com.andronmobi.bookstore.ui.fragment;
 
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,8 +15,11 @@ import com.andronmobi.bookstore.common.Status;
 import com.andronmobi.bookstore.db.BookDb;
 import com.andronmobi.bookstore.model.Book;
 import com.andronmobi.bookstore.repository.BookRepository;
+import com.andronmobi.bookstore.databinding.FragmentBooksListBinding;
 
 public class FragmentBookList extends NavFragment {
+
+    private FragmentBooksListBinding mBinding;
 
     @Override
     protected int getLayoutResId() {
@@ -28,11 +32,11 @@ public class FragmentBookList extends NavFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+        mBinding = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
 
         final BookDb db = BookDb.getInstance(getContext());
 
-        view.findViewById(R.id.btn_fragment_one).setOnClickListener(new View.OnClickListener() {
+        mBinding.btnFragmentOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                if (getActivity() instanceof FragmentControl) {
@@ -60,6 +64,6 @@ public class FragmentBookList extends NavFragment {
                 });
             }
         });
-        return view;
+        return mBinding.getRoot();
     }
 }
