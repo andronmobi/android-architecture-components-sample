@@ -36,33 +36,28 @@ public class FragmentBookList extends NavFragment {
 
         final BookDb db = BookDb.getInstance(getContext());
 
-        mBinding.btnFragmentOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (getActivity() instanceof FragmentControl) {
-//                    FragmentControl fragmentControl = (FragmentControl) getActivity();
-//                    fragmentControl.displayFragment(FragmentBookInfo.class);
-//                }
-                BookRepository bookRepository = new BookRepository(new AppExecutors(), db);
-                bookRepository.loadBook().observeForever(resource -> {
-                    Log.d(TAG, "live data onChanged status " + resource.status);
-                    if (resource.status == Status.SUCCESS) {
-                        for (Book book : resource.data) {
-                            Log.d(TAG, "id: " + book.getId());
-                            Log.d(TAG, "title: " + book.getTitle());
-                            Log.d(TAG, "book ISBN: " + book.getIsbn());
-                            Log.d(TAG, "title: " + book.getCover());
-                            Log.d(TAG, "price: " + book.getPrice());
-                            if (book.getSynopsis() != null) {
-                                for (String syn : book.getSynopsis()) {
-                                    Log.d(TAG, "synopsis: " + syn);
-                                }
+        mBinding.btnFragmentOne.setOnClickListener(v -> {
+            mBinding.setIsLoading(true);
+            BookRepository bookRepository = new BookRepository(new AppExecutors(), db);
+            bookRepository.loadBook().observeForever(resource -> {
+                mBinding.setIsLoading(false);
+                Log.d(TAG, "live data onChanged status " + resource.status);
+                if (resource.status == Status.SUCCESS) {
+                    for (Book book : resource.data) {
+                        Log.d(TAG, "id: " + book.getId());
+                        Log.d(TAG, "title: " + book.getTitle());
+                        Log.d(TAG, "book ISBN: " + book.getIsbn());
+                        Log.d(TAG, "title: " + book.getCover());
+                        Log.d(TAG, "price: " + book.getPrice());
+                        if (book.getSynopsis() != null) {
+                            for (String syn : book.getSynopsis()) {
+                                Log.d(TAG, "synopsis: " + syn);
                             }
-                            Log.d(TAG, "--------------------");
                         }
+                        Log.d(TAG, "--------------------");
                     }
-                });
-            }
+                }
+            });
         });
         return mBinding.getRoot();
     }

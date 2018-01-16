@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="isLoading" type="boolean" />
+    </data>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,7 +21,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="@string/fragment_books_list" />
+                android:text="@string/fragment_books_list_loading"
+                app:visibleGone="@{isLoading}"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/books_list"
+                android:contentDescription="@string/fragment_books_list_descr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="LinearLayoutManager"
+                app:visibleGone="@{!isLoading}"/>
 
             <Button
                 android:id="@+id/btn_fragment_one"

@@ -8,6 +8,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="fragment_books_list">Books</string>
+    <string name="fragment_books_list_loading">Loading books...</string>
+    <string name="fragment_books_list_descr">Books list</string>
+
     <string name="fragment_book_info">Book info</string>
     <string name="fragment_cart">Cart</string>
 
