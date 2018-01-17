@@ -11,6 +11,8 @@
     <string name="fragment_books_list_loading">Loading books...</string>
     <string name="fragment_books_list_descr">Books list</string>
 
+    <string name="cd_book_title">Title of the book</string>
+
     <string name="fragment_book_info">Book info</string>
     <string name="fragment_cart">Cart</string>
 
