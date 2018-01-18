@@ -37,7 +37,7 @@ public class FragmentBookList extends NavFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
 
-        mBooksAdapter = new BooksAdapter(mBookClickCallback);
+        mBooksAdapter = new BooksAdapter(this.getContext(), mBookClickCallback);
         mBinding.booksList.setAdapter(mBooksAdapter);
 
         final BookDb db = BookDb.getInstance(getContext());
